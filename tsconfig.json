@@ -27,7 +27,8 @@
       "core": [
         "src/app/core"
       ]
-    }
+    },
+    "baseUrl": "./",
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
