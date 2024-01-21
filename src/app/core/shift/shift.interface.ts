@@ -1,6 +1,6 @@
 export interface IShift {
   id: string;
   employeeId: string;
-  clockIn: number;
-  clockOut: number;
+  clockIn: Date;
+  clockOut: Date;
 }

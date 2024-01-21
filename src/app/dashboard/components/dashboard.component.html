@@ -1,1 +1,14 @@
-<p>dashboard works!</p>
+
+<div class="container">
+
+  @if ((dashboardStore.status$ | async) === 'loading') {
+    <mat-spinner></mat-spinner>
+  } @else if ((dashboardStore.status$ | async) === 'error') {
+    <mat-error>Something went wrong</mat-error>
+  } @else if ((dashboardStore.status$ | async) === 'success') {
+    @if (dashboardStore.statistic$ | async; as data) {
+      <app-dashboard-statistic [statistic]="data"></app-dashboard-statistic>
+    }
+  }
+
+</div>

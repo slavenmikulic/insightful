@@ -1,0 +1,14 @@
+<div class="container">
+  <div>
+    {{ statistic.totalClockedIn | timeFormat }}
+  </div>
+  <div>
+    {{ statistic.totalEmployees }} total employees
+  </div>
+  <div>
+    {{ statistic.overtimeAmount | currency: 'EUR' }} overtime
+  </div>
+  <div>
+    {{ statistic.regularAmount | currency: 'EUR' }} regular
+  </div>
+</div>
