@@ -5,28 +5,47 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './components/dashboard.component';
 import { DashboardStatisticComponent } from './components/dashboard-statistic/dashboard-statistic.component';
 import { DashboardStore } from './dashboard.store';
-import { DashboardTotalClockedInComponent } from './components/dashboard-total-clocked-in/dashboard-total-clocked-in.component';
-import { DashboardEmployeesTotalComponent } from './components/dashboard-employees-total/dashboard-employees-total.component';
 import { TimeFormatPipe } from '../core/pipes/time-format.pipe';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { MatError } from '@angular/material/form-field';
+import { DashboardEmployeesTableComponent } from './components/dashboard-employees-table/dashboard-employees-table.component';
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow,
+  MatRowDef,
+  MatTable
+} from '@angular/material/table';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { DashboardEmployeesEditDialogModule } from './dashboard-employees-edit-dialog/dashboard-employees-edit-dialog.module';
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    DashboardStatisticComponent,
-    DashboardTotalClockedInComponent,
-    DashboardEmployeesTotalComponent
-  ],
+  declarations: [DashboardComponent, DashboardStatisticComponent, DashboardEmployeesTableComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     TimeFormatPipe,
     MatProgressSpinner,
-    MatGridList,
-    MatGridTile,
-    MatError
+    MatError,
+    MatTable,
+    MatCheckbox,
+    MatHeaderCell,
+    MatColumnDef,
+    MatCell,
+    MatCellDef,
+    MatHeaderCellDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRow,
+    MatRowDef,
+    MatButton,
+    DashboardEmployeesEditDialogModule
   ],
   providers: [DashboardStore]
 })

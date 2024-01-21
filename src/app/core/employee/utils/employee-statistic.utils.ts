@@ -1,5 +1,4 @@
-import { IEmployeeShifts } from '../employee.interface';
-import { IDashboardEmployeeStatistic } from '../../../dashboard/interfaces/dashboard-statistic.interface';
+import { IEmployeeShifts } from '../intefaces/employee.interface';
 import {
   calculateClockInUntilEndOfDay,
   calculateClockOutForNextDay,
@@ -8,13 +7,17 @@ import {
   getRegularHours
 } from '../../utils/time-utils';
 import { IShift } from '../../shift/shift.interface';
+import { IEmployeeStatistic } from '../intefaces/employee-statistic.interface';
 
+/**
+ * Calculates the statistics for an employee's shifts.
+ */
 export const calculateEmployeeShiftsStatistic = (
   shifts: IEmployeeShifts,
   hourlyRate: number,
   hourlyRateOvertime: number
-): IDashboardEmployeeStatistic => {
-  const shiftStatistic: IDashboardEmployeeStatistic = {
+): IEmployeeStatistic => {
+  const shiftStatistic: IEmployeeStatistic = {
     totalClockedIn: 0,
     regularAmount: 0,
     overtimeAmount: 0

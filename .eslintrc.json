@@ -10,8 +10,7 @@
       ],
       "parserOptions": {
         "project": [
-          "tsconfig.json",
-          "e2e/tsconfig.json"
+          "tsconfig.json"
         ],
         "createDefaultProgram": true
       },
@@ -77,8 +76,7 @@
       }
     },
     {
-      "files": ["*.ts"],
-      "excludedFiles": "*.store.ts",
+      "files": ["*.store.ts"],
       "rules": {
         "@typescript-eslint/member-ordering": "off"
       }

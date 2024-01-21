@@ -1,5 +1,5 @@
 import { calculateEmployeeShiftsStatistic } from './employee-statistic.utils';
-import { IEmployee } from '../employee.interface';
+import { IEmployee } from '../intefaces/employee.interface';
 import { getEndDayDateTimestamp, getHoursFromTimestamp, getStartDayDateTimestamp } from '../../utils/time-utils';
 
 describe('Employee Statistic Utils', () => {
@@ -12,7 +12,10 @@ describe('Employee Statistic Utils', () => {
       hourlyRate: 10,
       hourlyRateOvertime: 15,
       shifts: new Map(),
-      email: 'john@doe.com'
+      email: 'john@doe.com',
+      regularAmount: 0,
+      overtimeAmount: 0,
+      totalClockedIn: 0
     };
   });
 
@@ -26,7 +29,7 @@ describe('Employee Statistic Utils', () => {
   });
 
   it('should calculate shift statistics for an employee with one shift within the same day', () => {
-    employee.shifts.set('2023-01-01', [
+    employee.shifts.set(new Date('2023-01-01').getTime(), [
       {
         id: '1',
         employeeId: '1',
@@ -44,7 +47,7 @@ describe('Employee Statistic Utils', () => {
   });
 
   it('should calculate shift statistics for an employee with overtime', () => {
-    employee.shifts.set('2023-01-01T06:00:00', [
+    employee.shifts.set(new Date('2023-01-01T06:00:00').getTime(), [
       {
         id: '1',
         employeeId: '1',
@@ -65,7 +68,7 @@ describe('Employee Statistic Utils', () => {
     const clockIn = new Date(1704146400000); // '2023-01-01T22:00:00'
     const clockOut = new Date(1704175200000); // '2023-01-02T06:00:00'
 
-    employee.shifts.set('2023-01-01', [
+    employee.shifts.set(new Date('2023-01-01').getTime(), [
       {
         id: '1',
         employeeId: '1',
@@ -90,7 +93,7 @@ describe('Employee Statistic Utils', () => {
   });
 
   it('should calculate shift statistics for an employee with multiple shifts', () => {
-    employee.shifts.set('2023-01-01', [
+    employee.shifts.set(new Date('2023-01-01').getTime(), [
       {
         id: '1',
         employeeId: '1',
@@ -98,7 +101,7 @@ describe('Employee Statistic Utils', () => {
         clockOut: new Date('2023-01-01T16:00:00')
       }
     ]);
-    employee.shifts.set('2023-01-02', [
+    employee.shifts.set(new Date('2023-01-02').getTime(), [
       {
         id: '2',
         employeeId: '1',
@@ -125,7 +128,7 @@ describe('Employee Statistic Utils', () => {
 
   it('should calculate shift statistics for an employee with multiple shifts and overtime', () => {
     // Add multiple shifts to the employee, ensuring that at least one of the shifts has overtime
-    employee.shifts.set('2023-01-01', [
+    employee.shifts.set(new Date('2023-01-01').getTime(), [
       {
         id: '1',
         employeeId: '1',
@@ -134,7 +137,7 @@ describe('Employee Statistic Utils', () => {
       }
     ]);
 
-    employee.shifts.set('2023-01-02', [
+    employee.shifts.set(new Date('2023-01-02').getTime(), [
       {
         id: '2',
         employeeId: '1',

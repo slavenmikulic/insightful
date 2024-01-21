@@ -1,0 +1,17 @@
+<div class="employee-form" [formGroup]="form">
+  <div class="employee-basic-info">
+    <mat-form-field>
+      <mat-label>Employee name:</mat-label>
+      <input matInput type="text"  placeholder="Name" formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Employee hourly rate:</mat-label>
+      <input matInput type="number"  placeholder="Hourly Rate" formControlName="hourlyRate">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Employee overtime hourly rate:</mat-label>
+      <input matInput type="number"  placeholder="Hourly Rate" formControlName="hourlyRateOvertime">
+    </mat-form-field>
+  </div>
+
+</div>

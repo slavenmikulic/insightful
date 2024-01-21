@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { IShift } from './shift.interface';
-import { ListBaseService } from '../services/list-base.service';
+import { BaseService } from '../services/base.service';
 import { map, Observable } from 'rxjs';
+import { IListPagination } from '../interfaces/list-pagination';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ShiftService extends ListBaseService<IShift> {
+export class ShiftService extends BaseService<IShift> {
   apiUrl = environment.apiUrl + '/shifts';
 
   constructor() {
     super();
   }
 
-  override list(): Observable<IShift[]> {
+  override list(data?: Partial<IListPagination>): Observable<IShift[]> {
     return super
-      .list()
+      .list(data)
       .pipe(
         map((shifts: IShift[]) =>
           shifts.map(shift => ({ ...shift, clockIn: new Date(shift.clockIn), clockOut: new Date(shift.clockOut) }))

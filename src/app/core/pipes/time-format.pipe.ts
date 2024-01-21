@@ -14,6 +14,31 @@ export class TimeFormatPipe implements PipeTransform {
     const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
     const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
 
-    return `${years} years, ${months} months, ${days} days, ${hours} hours, ${minutes} minutes`;
+    const format: string[][] = [];
+    if (years) {
+      format.push([`${years}`, 'years']);
+    }
+
+    if (months) {
+      format.push([`${months}`, 'months']);
+    }
+
+    if (days) {
+      format.push([`${days}`, 'days']);
+    }
+
+    if (hours) {
+      format.push([`${hours}`, 'hours']);
+    }
+
+    if (minutes) {
+      format.push([`${minutes}`, 'minutes']);
+    }
+
+    if (!format.length) {
+      return '0 minutes';
+    }
+
+    return format.map(([value, unit]) => `${value} ${unit}`).join(', ');
   }
 }

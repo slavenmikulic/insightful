@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { IEmployee } from './employee.interface';
-import { ListBaseService } from '../services/list-base.service';
+import { IEmployee } from './intefaces/employee.interface';
+import { BaseService } from '../services/base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeService extends ListBaseService<IEmployee> {
+export class EmployeeService extends BaseService<IEmployee> {
   apiUrl = environment.apiUrl + '/employees';
 
   constructor() {
