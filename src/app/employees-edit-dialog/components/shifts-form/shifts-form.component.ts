@@ -1,23 +1,23 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IShiftForm } from '../../interfaces/shift-form.interface';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { getEndDayDate } from '../../../../core/utils/time-utils';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { getEndDayDate } from '../../../core/utils/time-utils';
+import { IShiftForm } from '../../interfaces/shift-form.interface';
 
 @Component({
-  selector: 'app-dashboard-employee-shifts-form',
-  templateUrl: './dashboard-employee-shifts-form.component.html',
-  styleUrl: './dashboard-employee-shifts-form.component.scss',
+  selector: 'app-shifts-form',
+  templateUrl: './shifts-form.component.html',
+  styleUrl: './shifts-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardEmployeeShiftsFormComponent implements OnChanges {
+export class ShiftsFormComponent implements OnChanges {
   @Input({ required: true }) form!: FormArray<FormGroup<IShiftForm>>;
   @Input() shiftDays!: Date[];
 
   dataSource!: MatTableDataSource<FormGroup<IShiftForm>>;
 
-  public filterDate = new FormControl<Date | null>(null);
+  filterDate = new FormControl<Date | null>(null);
 
   displayColumns = ['shift', 'clockIn', 'clockOut', 'totalTime'];
 

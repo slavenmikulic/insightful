@@ -1,18 +1,18 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { IEmployee } from '../../../core/employee/intefaces/employee.interface';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IEmployee } from '../../../../core/employee/intefaces/employee.interface';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { IShift } from '../../../core/shift/shift.interface';
 import { IEmployeeForm } from '../../interfaces/employee-form.interface';
-import { IShift } from '../../../../core/shift/shift.interface';
 import { IShiftForm } from '../../interfaces/shift-form.interface';
 
 @Component({
-  selector: 'app-dashboard-employees-edit-dialog',
-  templateUrl: './dashboard-employees-edit-dialog.component.html',
-  styleUrl: './dashboard-employees-edit-dialog.component.scss',
+  selector: 'app-employees-edit-dialog',
+  templateUrl: './employees-edit-dialog.component.html',
+  styleUrl: './employees-edit-dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardEmployeesEditDialogComponent {
+export class EmployeesEditDialogComponent {
   employees = inject<IEmployee[]>(MAT_DIALOG_DATA);
   dialogRef = inject(MatDialogRef);
 

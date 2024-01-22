@@ -14,7 +14,7 @@
   </div>
 
   <div class="wrapper">
-    <table mat-table [dataSource]="dataSource"  class="table mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource"  class="table mat-elevation-z0">
       <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
 
@@ -26,23 +26,22 @@
       <ng-container matColumnDef="clockIn">
         <th mat-header-cell *matHeaderCellDef>Clock in time</th>
         <td mat-cell *matCellDef="let row">
-          <div [formGroup]="row">
-            <mat-form-field>
-              <input type="text" [matDatepicker]="row.get('clockIn')" [formControl]="row.get('clockIn')">
-            </mat-form-field>
-          </div>
+          <app-shift-hour-input [control]="row.get('clockIn')"></app-shift-hour-input>
       </ng-container>
 
       <ng-container matColumnDef="clockOut">
         <th mat-header-cell *matHeaderCellDef>Clock out time</th>
-        <td mat-cell *matCellDef="let row">{{ row.get('clockOut').value | date: 'HH:mm' }}</td>
+        <td mat-cell *matCellDef="let row">
+          <app-shift-hour-input [control]="row.get('clockOut')"></app-shift-hour-input>
       </ng-container>
 
       <ng-container matColumnDef="totalTime">
         <th mat-header-cell *matHeaderCellDef>Total time</th>
-        <td mat-cell *matCellDef="let row">{{ row.get('totalTime').value | timeFormat }}</td>
+        <td mat-cell *matCellDef="let row">
+          {{ row.get('totalTime').value | timeFormat }}
+        </td>
       </ng-container>
     </table>
   </div>
-<!--  </cdk-virtual-scroll-viewport>-->
+  <!--  </cdk-virtual-scroll-viewport>-->
 </div>

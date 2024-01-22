@@ -1,0 +1,34 @@
+.control {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 8px;
+  width: fit-content;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  outline: none;
+  width: 15px;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  [type=number] {
+    -moz-appearance: textfield;
+  }
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}

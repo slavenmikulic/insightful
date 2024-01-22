@@ -8,14 +8,14 @@
           <h4>Employee {{ $index + 1}}</h4>
           <div>
 
-            <app-dashboard-employee-form [form]="employee"></app-dashboard-employee-form>
+            <app-employee-form [form]="employee"></app-employee-form>
 
             <h4>Shifts</h4>
 
-            <app-dashboard-employee-shifts-form
+            <app-shifts-form
               [form]="employee.controls.shifts"
               [shiftDays]="employees[$index].workDays">
-            </app-dashboard-employee-shifts-form>
+            </app-shifts-form>
           </div>
 
           @if (!$last) {

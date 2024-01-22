@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, inject, Input, OnChanges, SimpleCha
 import { IEmployee } from '../../../core/employee/intefaces/employee.interface';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
-import { DashboardEmployeesEditDialogComponent } from '../../dashboard-employees-edit-dialog/components/dashboard-employees-edit-dialog/dashboard-employees-edit-dialog.component';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
+import { EmployeesEditDialogComponent } from '../../../employees-edit-dialog/components/employees-edit-dialog/employees-edit-dialog.component';
 
 @Component({
   selector: 'app-dashboard-employees-table',
@@ -28,7 +28,7 @@ export class DashboardEmployeesTableComponent implements OnChanges {
   }
 
   public onOpenDialog(): void {
-    this.dialog.open(DashboardEmployeesEditDialogComponent, {
+    this.dialog.open(EmployeesEditDialogComponent, {
       data: this.selection.selected
     });
   }
