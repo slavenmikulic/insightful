@@ -5,7 +5,15 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true
 })
 export class TimeFormatPipe implements PipeTransform {
-  transform(timestamp: number): string {
+  transform(timestamp: number | null): string {
+    if (!timestamp) {
+      return '0 minutes';
+    }
+
+    if (timestamp < 0) {
+      return '0 minutes';
+    }
+
     const totalSeconds = Math.floor(timestamp / 1000);
 
     const years = Math.floor(totalSeconds / (60 * 60 * 24 * 365));

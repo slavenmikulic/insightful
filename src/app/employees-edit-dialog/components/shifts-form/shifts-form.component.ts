@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormArray, FormGroup } from '@angular/forms';
 import { getEndDayDate } from '../../../core/utils/time-utils';
 import { IShiftForm } from '../../interfaces/shift-form.interface';
+import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 
 @Component({
   selector: 'app-shifts-form',
@@ -15,19 +14,13 @@ export class ShiftsFormComponent implements OnChanges {
   @Input({ required: true }) form!: FormArray<FormGroup<IShiftForm>>;
   @Input() shiftDays!: Date[];
 
-  dataSource!: MatTableDataSource<FormGroup<IShiftForm>>;
-
-  filterDate = new FormControl<Date | null>(null);
+  dataSource!: TableVirtualScrollDataSource<FormGroup<IShiftForm>>;
 
   displayColumns = ['shift', 'clockIn', 'clockOut', 'totalTime'];
 
-  constructor() {
-    this.filterDate.valueChanges.pipe(takeUntilDestroyed()).subscribe(date => this.onChangeFilter(date));
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['form']) {
-      this.dataSource = new MatTableDataSource<FormGroup<IShiftForm>>(this.form.controls);
+      this.dataSource = new TableVirtualScrollDataSource<FormGroup<IShiftForm>>(this.form.controls);
       this.dataSource.filterPredicate = this.filterPredicate;
     }
   }

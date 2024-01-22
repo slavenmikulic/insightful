@@ -12,7 +12,7 @@ export const calculateClockOutForNextDay = (clockOut: Date): number =>
   clockOut.getTime() - getStartDayDateTimestamp(clockOut);
 
 export const calculateClockInUntilEndOfDay = (clockIn: Date): number =>
-  getEndDayDateTimestamp(clockIn) - clockIn.getTime();
+  getEndDayDate(clockIn).getTime() - clockIn.getTime();
 
 export const getStartDayDate = (date: Date): Date =>
   new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);

@@ -1,50 +1,80 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-shift-hour-input',
   templateUrl: './shift-hour-input.component.html',
   styleUrl: './shift-hour-input.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => ShiftHourInputComponent),
+      multi: true
+    }
+  ]
 })
-export class ShiftHourInputComponent implements OnChanges {
-  @Input({ required: true }) control!: FormControl<Date | null>;
-
+export class ShiftHourInputComponent implements ControlValueAccessor {
   hours = new FormControl<number | null>(null);
   minutes = new FormControl<number | null>(null);
+  value: Date | null = null;
 
   constructor() {
     this.hours.valueChanges.pipe(takeUntilDestroyed()).subscribe(hours => this.onChangeHours(hours));
     this.minutes.valueChanges.pipe(takeUntilDestroyed()).subscribe(minutes => this.onChangeMinutes(minutes));
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['control']) {
-      const value = this.control.value;
-      if (value) {
-        const hours = value.getHours();
-        const minutes = value.getMinutes();
-        this.hours.setValue(hours, { emitEvent: false });
-        this.minutes.setValue(minutes, { emitEvent: false });
-      }
-    }
-  }
-
   public onChangeHours(hours: number | null): void {
-    const value = this.control.value;
+    const value = this.value;
 
     if (value) {
       value.setHours(hours ?? 0);
-      this.control.setValue(value);
+      this.onChange(value);
     }
   }
 
   public onChangeMinutes(minutes: number | null): void {
-    const value = this.control.value;
+    const value = this.value;
     if (value) {
       value.setMinutes(minutes ?? 0);
-      this.control.setValue(value);
+      this.onChange(value);
     }
   }
+
+  writeValue(value: Date): void {
+    this.value = value;
+
+    if (value) {
+      const hours = value.getHours();
+      const minutes = value.getMinutes();
+      this.hours.setValue(hours, { emitEvent: false });
+      this.minutes.setValue(minutes, { emitEvent: false });
+    }
+  }
+
+  registerOnChange(fn: OnChangeFunction): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: OnTouchFunction): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    if (isDisabled) {
+      this.hours.disable();
+      this.minutes.disable();
+    } else {
+      this.hours.enable();
+      this.minutes.enable();
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private onChange = (_: Date): void => {};
+  private onTouched = (): void => {};
 }
+
+type OnChangeFunction = (value: Date) => void;
+type OnTouchFunction = () => void;

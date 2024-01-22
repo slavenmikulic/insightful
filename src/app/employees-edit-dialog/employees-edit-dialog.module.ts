@@ -25,9 +25,13 @@ import { MatOption } from '@angular/material/autocomplete';
 import { MatSelect } from '@angular/material/select';
 import { TimeFormatPipe } from '../core/pipes/time-format.pipe';
 import { ShiftHourInputComponent } from './components/shift-hour-input/shift-hour-input.component';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
+import { ShiftFilterComponent } from './components/shift-filter/shift-filter.component';
+import { ShiftTotalTimeComponent } from './components/shift-total-time/shift-total-time.component';
 
 @NgModule({
-  declarations: [EmployeeFormComponent, ShiftsFormComponent, EmployeesEditDialogComponent, ShiftHourInputComponent],
+  declarations: [EmployeeFormComponent, ShiftsFormComponent, EmployeesEditDialogComponent, ShiftHourInputComponent, ShiftFilterComponent, ShiftTotalTimeComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -52,7 +56,9 @@ import { ShiftHourInputComponent } from './components/shift-hour-input/shift-hou
     MatSelect,
     MatTable,
     TimeFormatPipe,
-    MatHeaderCellDef
+    MatHeaderCellDef,
+    CdkVirtualScrollViewport,
+    TableVirtualScrollModule
   ]
 })
 export class EmployeesEditDialogModule {}

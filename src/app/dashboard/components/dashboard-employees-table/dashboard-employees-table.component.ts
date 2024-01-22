@@ -4,6 +4,9 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { EmployeesEditDialogComponent } from '../../../employees-edit-dialog/components/employees-edit-dialog/employees-edit-dialog.component';
+import { filter } from 'rxjs';
+import { IEmployeeEditForm } from '../../../employees-edit-dialog/interfaces/employee-edit-form.interface';
+import { FormArray, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard-employees-table',
@@ -28,8 +31,12 @@ export class DashboardEmployeesTableComponent implements OnChanges {
   }
 
   public onOpenDialog(): void {
-    this.dialog.open(EmployeesEditDialogComponent, {
-      data: this.selection.selected
-    });
+    this.dialog
+      .open(EmployeesEditDialogComponent, {
+        data: this.selection.selected
+      })
+      .afterClosed()
+      .pipe(filter((data): data is FormGroup<IEmployeeEditForm> => !!data))
+      .subscribe(data => {});
   }
 }

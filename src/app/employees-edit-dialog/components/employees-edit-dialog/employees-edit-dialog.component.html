@@ -27,7 +27,19 @@
   </div>
 
   <div mat-dialog-actions class="button-actions">
-    <button mat-raised-button color="primary" type="submit">Save</button>
-    <button mat-button color="secondary" type="button" (click)="dialogRef.close()">Cancel</button>
+    <button mat-raised-button
+            color="primary"
+            type="submit"
+            (click)="onSave()">
+      Save
+    </button>
+
+    <button
+      mat-button
+      color="secondary"
+      type="button"
+      (click)="dialogRef.close()">
+      Cancel
+    </button>
   </div>
 </div>

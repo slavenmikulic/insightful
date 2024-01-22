@@ -65,6 +65,33 @@ export class DashboardStore extends ComponentStore<DashboardState> {
     status
   }));
 
+  readonly editEmployees = this.updater((state, employees: IEmployee[]) => ({
+    ...state,
+    employees: state.employees.map(employee => {
+      const editedEmployee = employees.find(editedEmployee => editedEmployee.id === employee.id);
+      if (editedEmployee) {
+        return editedEmployee;
+      }
+      return employee;
+    })
+  }));
+
+  readonly editShifts = this.updater((state, shifts: IShift[]) => ({
+    ...state,
+    employees: state.employees.map(employee => {
+      const employeeShifts = employee.shifts;
+      employee.shifts = employeeShifts.map(shift => {
+        const editedShift = shifts.find(shift => shift.id === employee.id);
+        if (editedShift) {
+          return editedShift;
+        }
+        return shift;
+      });
+
+      return employee;
+    })
+  }));
+
   // effects
   readonly fetch = this.effect((source$: Observable<void>) =>
     source$.pipe(
@@ -76,6 +103,28 @@ export class DashboardStore extends ComponentStore<DashboardState> {
       tapResponse(
         employees => this.setEmployees(employees),
         () => this.updateStatus('error')
+      )
+    )
+  );
+
+  readonly editEmployeesEffect = this.effect<IEmployee[]>((source$: Observable<IEmployee[]>) =>
+    source$.pipe(
+      switchMap(employees =>
+        combineLatest(employees.map(employee => this.employeeService.update(employee.id, employee)))
+      ),
+      tapResponse(
+        employees => this.editEmployees(employees),
+        () => console.error('something went wrong during the update of employees')
+      )
+    )
+  );
+
+  readonly editShiftsEffect = this.effect<IShift[]>((source$: Observable<IShift[]>) =>
+    source$.pipe(
+      switchMap(shifts => combineLatest(shifts.map(shift => this.shiftService.update(shift.id, shift)))),
+      tapResponse(
+        shift => this.editShifts(shift),
+        () => console.error('something went wrong during the update of shifts')
       )
     )
   );

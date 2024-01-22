@@ -13,7 +13,7 @@ export abstract class BaseService<T> {
     return this.http.get<T[]>(this.apiUrl, { params: prepareParams(data) });
   }
 
-  public update(id: number, data: T): Observable<T> {
+  public update(id: string, data: T): Observable<T> {
     return this.http.put<T>(`${this.apiUrl}/${id}`, data);
   }
 }

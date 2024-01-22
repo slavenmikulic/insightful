@@ -34,7 +34,8 @@ export const calculateEmployeeShiftsStatistic = (
 
   for (const shift of shifts) {
     // if the shift is not on the same day as the current day, calculate the current day's total and update the current day
-    if (current.day.getTime() !== getStartDayDate(shift.clockIn).getTime()) {
+    const isDifferentDay = current.day.getDate() !== shift.clockIn.getDate();
+    if (isDifferentDay) {
       shiftStatistic = calculateEmployeeStatistic(shiftStatistic, current, hourlyRate, hourlyRateOvertime);
 
       current.day = getStartDayDate(shift.clockIn);
