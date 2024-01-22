@@ -7,7 +7,5 @@ export interface IEmployee extends IEmployeeStatistic {
   email: string;
   hourlyRate: number;
   hourlyRateOvertime: number;
-  shifts: IEmployeeShifts;
+  shifts: IShift[];
 }
-
-export type IEmployeeShifts = Map<number, IShift[]>;

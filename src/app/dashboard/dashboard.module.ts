@@ -24,6 +24,8 @@ import {
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatButton } from '@angular/material/button';
 import { DashboardEmployeesEditDialogModule } from './dashboard-employees-edit-dialog/dashboard-employees-edit-dialog.module';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
 
 @NgModule({
   declarations: [DashboardComponent, DashboardStatisticComponent, DashboardEmployeesTableComponent],
@@ -45,7 +47,9 @@ import { DashboardEmployeesEditDialogModule } from './dashboard-employees-edit-d
     MatRow,
     MatRowDef,
     MatButton,
-    DashboardEmployeesEditDialogModule
+    DashboardEmployeesEditDialogModule,
+    CdkVirtualScrollViewport,
+    TableVirtualScrollModule
   ],
   providers: [DashboardStore]
 })

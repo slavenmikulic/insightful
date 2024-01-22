@@ -4,8 +4,8 @@
   <button mat-raised-button color="primary" [disabled]="selection.isEmpty()" (click)="onOpenDialog()">Edit Selected</button>
 </div>
 
-<div class="table">
-  <table mat-table [dataSource]="employees" class="mat-elevation-z8">
+<cdk-virtual-scroll-viewport tvsItemSize="52" headerHeight="52" class="table mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
 
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>Select</th>
@@ -48,4 +48,4 @@
         (click)="selection.toggle(row)">
     </tr>
   </table>
-</div>
+</cdk-virtual-scroll-viewport>

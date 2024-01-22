@@ -12,8 +12,8 @@
       <app-dashboard-statistic [statistic]="data"></app-dashboard-statistic>
     }
 
-    @if (dashboardStore.employees$ | async; as data) {
-      <app-dashboard-employees-table [employees]="data"></app-dashboard-employees-table>
+    @if (dashboardStore.employees$ | async; as employees) {
+      <app-dashboard-employees-table [employees]="employees"></app-dashboard-employees-table>
     }
   }
 

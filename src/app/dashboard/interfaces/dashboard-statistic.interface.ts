@@ -1,5 +1,8 @@
-import { IEmployeeStatistic } from '../../core/employee/intefaces/employee-statistic.interface';
-
-export interface IDashboardStatistic extends IEmployeeStatistic {
+export interface IDashboardStatistic {
   totalEmployees: number;
+  totalClockedIn: number;
+  regularAmount: number;
+  overtimeAmount: number;
 }
+
+export type IDashboardEmployeeStatistic = Omit<IDashboardStatistic, 'totalEmployees'>;
