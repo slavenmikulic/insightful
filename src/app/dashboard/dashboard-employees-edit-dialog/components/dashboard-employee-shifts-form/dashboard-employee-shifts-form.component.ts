@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IShiftForm } from '../../interfaces/shift-form.interface';
-import { FormArray, FormGroup } from '@angular/forms';
-import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
+import { getEndDayDate } from '../../../../core/utils/time-utils';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-dashboard-employee-shifts-form',
@@ -11,20 +13,40 @@ import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 })
 export class DashboardEmployeeShiftsFormComponent implements OnChanges {
   @Input({ required: true }) form!: FormArray<FormGroup<IShiftForm>>;
-  @Input() shiftDays!: IterableIterator<number>;
+  @Input() shiftDays!: Date[];
 
-  dataSource!: TableVirtualScrollDataSource<FormGroup<IShiftForm>>;
-  days: number[] = [];
+  dataSource!: MatTableDataSource<FormGroup<IShiftForm>>;
+
+  public filterDate = new FormControl<Date | null>(null);
 
   displayColumns = ['shift', 'clockIn', 'clockOut', 'totalTime'];
 
+  constructor() {
+    this.filterDate.valueChanges.pipe(takeUntilDestroyed()).subscribe(date => this.onChangeFilter(date));
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['shiftDays']) {
-      this.days = this.shiftDays ? Array.from(this.shiftDays) : [];
+    if (changes['form']) {
+      this.dataSource = new MatTableDataSource<FormGroup<IShiftForm>>(this.form.controls);
+      this.dataSource.filterPredicate = this.filterPredicate;
+    }
+  }
+
+  public onChangeFilter(day: Date | null): void {
+    this.dataSource.filter = day?.toDateString() ?? '';
+  }
+
+  private filterPredicate(data: FormGroup<IShiftForm>, filter: string): boolean {
+    if (!filter) {
+      return true;
     }
 
-    if (changes['form']) {
-      this.dataSource = new TableVirtualScrollDataSource<FormGroup<IShiftForm>>(this.form.controls);
+    const filterDate = new Date(filter);
+    const clockIn = data.value.clockIn?.getTime();
+    if (clockIn) {
+      return clockIn > filterDate.getTime() && clockIn < getEndDayDate(filterDate).getTime();
     }
+
+    return false;
   }
 }

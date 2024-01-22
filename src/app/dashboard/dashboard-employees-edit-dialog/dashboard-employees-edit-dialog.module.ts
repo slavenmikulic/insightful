@@ -23,6 +23,8 @@ import {
 } from '@angular/material/table';
 import { CdkFixedSizeVirtualScroll, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
+import { TimeFormatPipe } from '../../core/pipes/time-format.pipe';
+import { MatDatepickerInput } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,10 @@ import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
     MatHeaderRowDef,
     MatRowDef,
     MatRow,
-    TableVirtualScrollModule
+    TableVirtualScrollModule,
+    TimeFormatPipe,
+    CdkVirtualScrollViewport,
+    MatDatepickerInput
   ]
 })
 export class DashboardEmployeesEditDialogModule {}

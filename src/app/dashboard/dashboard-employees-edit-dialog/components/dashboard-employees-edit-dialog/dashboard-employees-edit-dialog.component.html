@@ -1,33 +1,33 @@
-<!--<div class="modal">-->
-<!--  <h1 mat-dialog-title>Edit employees</h1>-->
+<div class="modal">
+  <h1 mat-dialog-title>Edit employees</h1>
 
-<!--  <div mat-dialog-content>-->
-<!--    <form [formGroup]="form">-->
-<!--      <div formArrayName="employees">-->
-<!--        @for (employee of employeesFormArray.controls; track $index) {-->
-<!--          <h4>Employee {{ $index + 1}}</h4>-->
-<!--          <div>-->
+  <div mat-dialog-content>
+    <form [formGroup]="form">
+      <div formArrayName="employees">
+        @for (employee of employeesFormArray.controls; track $index) {
+          <h4>Employee {{ $index + 1}}</h4>
+          <div>
 
-<!--            <app-dashboard-employee-form [form]="employee"></app-dashboard-employee-form>-->
+            <app-dashboard-employee-form [form]="employee"></app-dashboard-employee-form>
 
-<!--            <h4>Shifts</h4>-->
+            <h4>Shifts</h4>
 
-<!--            <app-dashboard-employee-shifts-form [form]="employee.controls.shifts" [shiftDays]="employees[$index].shifts.keys()">-->
+            <app-dashboard-employee-shifts-form
+              [form]="employee.controls.shifts"
+              [shiftDays]="employees[$index].workDays">
+            </app-dashboard-employee-shifts-form>
+          </div>
 
-<!--            </app-dashboard-employee-shifts-form>-->
+          @if (!$last) {
+            <hr>
+          }
+        }
+      </div>
+    </form>
+  </div>
 
-<!--          </div>-->
-
-<!--          @if (!$last) {-->
-<!--            <hr>-->
-<!--          }-->
-<!--        }-->
-<!--      </div>-->
-<!--    </form>-->
-<!--  </div>-->
-
-<!--  <div mat-dialog-actions class="button-actions">-->
-<!--    <button mat-raised-button color="primary" type="submit">Save</button>-->
-<!--    <button mat-button color="secondary" type="button" (click)="dialogRef.close()">Cancel</button>-->
-<!--  </div>-->
-<!--</div>-->
+  <div mat-dialog-actions class="button-actions">
+    <button mat-raised-button color="primary" type="submit">Save</button>
+    <button mat-button color="secondary" type="button" (click)="dialogRef.close()">Cancel</button>
+  </div>
+</div>
