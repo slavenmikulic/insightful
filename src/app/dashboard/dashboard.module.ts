@@ -7,64 +7,27 @@ import { DashboardStatisticComponent } from './components/dashboard-statistic/da
 import { DashboardStore } from './dashboard.store';
 import { TimeFormatPipe } from '../core/pipes/time-format.pipe';
 import { MatError } from '@angular/material/form-field';
-import { DashboardEmployeesTableComponent } from './components/dashboard-employees-table/dashboard-employees-table.component';
-import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef,
-  MatRow,
-  MatRowDef,
-  MatTable
-} from '@angular/material/table';
-import { MatCheckbox } from '@angular/material/checkbox';
-import { MatButton } from '@angular/material/button';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
-import { EmployeesEditDialogModule } from '../employees-edit-dialog/employees-edit-dialog.module';
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
-import { DashboardProgressCircleComponent } from './components/dashboard-progress-circle/dashboard-progress-circle.component';
 import { MatIcon } from '@angular/material/icon';
 import { ProgressCircleComponent } from '../core/components/progress-circle/progress-circle.component';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { EmployeesTableComponent } from '../core/components/employees-table/employees-table.component';
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    DashboardStatisticComponent,
-    DashboardEmployeesTableComponent,
-    DashboardProgressCircleComponent
-  ],
+  declarations: [DashboardComponent, DashboardStatisticComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     TimeFormatPipe,
     MatError,
-    MatTable,
-    MatCheckbox,
-    MatHeaderCell,
-    MatColumnDef,
-    MatCell,
-    MatCellDef,
-    MatHeaderCellDef,
-    MatHeaderRow,
-    MatHeaderRowDef,
-    MatRow,
-    MatRowDef,
-    MatButton,
-    CdkVirtualScrollViewport,
-    TableVirtualScrollModule,
-    EmployeesEditDialogModule,
     MatCard,
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
     MatIcon,
     ProgressCircleComponent,
-    MatProgressSpinner
+    MatProgressSpinner,
+    EmployeesTableComponent
   ],
   providers: [DashboardStore]
 })

@@ -13,10 +13,7 @@
     }
 
     @if (dashboardStore.employees$ | async; as employees) {
-      <app-dashboard-employees-table
-        [employees]="employees"
-        (updateEmployees)="updateEmployees($event)">
-      </app-dashboard-employees-table>
+      <app-employees-table [employees]="employees" (updateEmployees)="updateEmployees($event)"></app-employees-table>
     }
   }
 
