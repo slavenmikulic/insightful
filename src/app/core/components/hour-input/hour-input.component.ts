@@ -1,21 +1,23 @@
 import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-shift-hour-input',
-  templateUrl: './shift-hour-input.component.html',
-  styleUrl: './shift-hour-input.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-hour-input',
+  standalone: true,
+  imports: [ReactiveFormsModule],
+  templateUrl: './hour-input.component.html',
+  styleUrl: './hour-input.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ShiftHourInputComponent),
+      useExisting: forwardRef(() => HourInputComponent),
       multi: true
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShiftHourInputComponent implements ControlValueAccessor {
+export class HourInputComponent implements ControlValueAccessor {
   hours = new FormControl<number | null>(null);
   minutes = new FormControl<number | null>(null);
   value: Date | null = null;

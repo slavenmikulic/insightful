@@ -19,13 +19,13 @@
       <ng-container matColumnDef="clockIn">
         <th mat-header-cell *matHeaderCellDef>Clock in time</th>
         <td mat-cell *matCellDef="let row">
-          <app-shift-hour-input [formControl]="row.get('clockIn')"></app-shift-hour-input>
+          <app-hour-input [formControl]="row.get('clockIn')"></app-hour-input>
       </ng-container>
 
       <ng-container matColumnDef="clockOut">
         <th mat-header-cell *matHeaderCellDef>Clock out time</th>
         <td mat-cell *matCellDef="let row">
-          <app-shift-hour-input [formControl]="row.get('clockOut')"></app-shift-hour-input>
+          <app-hour-input [formControl]="row.get('clockOut')"></app-hour-input>
       </ng-container>
 
       <ng-container matColumnDef="totalTime">

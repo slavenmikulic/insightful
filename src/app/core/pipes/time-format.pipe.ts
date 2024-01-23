@@ -24,23 +24,23 @@ export class TimeFormatPipe implements PipeTransform {
 
     const format: string[][] = [];
     if (years) {
-      format.push([`${years}`, 'years']);
+      format.push([`${years}`, this.formatUnitPlural(years, 'year')]);
     }
 
     if (months) {
-      format.push([`${months}`, 'months']);
+      format.push([`${months}`, this.formatUnitPlural(months, 'month')]);
     }
 
     if (days) {
-      format.push([`${days}`, 'days']);
+      format.push([`${days}`, this.formatUnitPlural(months, 'day')]);
     }
 
     if (hours) {
-      format.push([`${hours}`, 'hours']);
+      format.push([`${hours}`, this.formatUnitPlural(hours, 'hour')]);
     }
 
     if (minutes) {
-      format.push([`${minutes}`, 'minutes']);
+      format.push([`${minutes}`, this.formatUnitPlural(minutes, 'minute')]);
     }
 
     if (!format.length) {
@@ -48,5 +48,9 @@ export class TimeFormatPipe implements PipeTransform {
     }
 
     return format.map(([value, unit]) => `${value} ${unit}`).join(', ');
+  }
+
+  private formatUnitPlural(value: number, unit: string): string {
+    return `${unit}${value > 1 ? 's' : ''}`;
   }
 }

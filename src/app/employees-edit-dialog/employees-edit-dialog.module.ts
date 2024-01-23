@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EmployeeFormComponent } from './components/employee-form/employee-form.component';
 import { ShiftsFormComponent } from './components/shifts-form/shifts-form.component';
 import { EmployeesEditDialogComponent } from './components/employees-edit-dialog/employees-edit-dialog.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -20,28 +20,25 @@ import {
   MatRowDef,
   MatTable
 } from '@angular/material/table';
-import { MatDatepickerInput } from '@angular/material/datepicker';
 import { MatOption } from '@angular/material/autocomplete';
 import { MatSelect } from '@angular/material/select';
 import { TimeFormatPipe } from '../core/pipes/time-format.pipe';
-import { ShiftHourInputComponent } from './components/shift-hour-input/shift-hour-input.component';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
 import { ShiftFilterComponent } from './components/shift-filter/shift-filter.component';
 import { ShiftTotalTimeComponent } from './components/shift-total-time/shift-total-time.component';
+import { HourInputComponent } from '../core/components/hour-input/hour-input.component';
 
 @NgModule({
   declarations: [
     EmployeeFormComponent,
     ShiftsFormComponent,
     EmployeesEditDialogComponent,
-    ShiftHourInputComponent,
     ShiftFilterComponent,
     ShiftTotalTimeComponent
   ],
   imports: [
     CommonModule,
-    FormsModule,
     MatButton,
     MatDialogActions,
     MatDialogContent,
@@ -53,7 +50,6 @@ import { ShiftTotalTimeComponent } from './components/shift-total-time/shift-tot
     MatCell,
     MatCellDef,
     MatColumnDef,
-    MatDatepickerInput,
     MatHeaderCell,
     MatHeaderRow,
     MatHeaderRowDef,
@@ -65,7 +61,8 @@ import { ShiftTotalTimeComponent } from './components/shift-total-time/shift-tot
     TimeFormatPipe,
     MatHeaderCellDef,
     CdkVirtualScrollViewport,
-    TableVirtualScrollModule
+    TableVirtualScrollModule,
+    HourInputComponent
   ]
 })
 export class EmployeesEditDialogModule {}
