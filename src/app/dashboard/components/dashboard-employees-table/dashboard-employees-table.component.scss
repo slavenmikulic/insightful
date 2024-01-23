@@ -10,7 +10,11 @@
   border-collapse: collapse;
   border-spacing: 0;
   border: 1px solid #dee2e6;
-  table-layout: fixed;
+}
+
+.wrapper {
+  height: 700px;
+  overflow: auto;
 }
 
 .actions {

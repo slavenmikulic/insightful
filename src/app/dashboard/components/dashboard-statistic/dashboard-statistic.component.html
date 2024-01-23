@@ -1,14 +1,61 @@
+
+
 <div class="container">
-  <div>
-    {{ statistic.totalClockedIn | timeFormat }}
-  </div>
-  <div>
-    {{ statistic.totalEmployees }} total employees
-  </div>
-  <div>
-    {{ statistic.overtimeAmount | currency: 'EUR' }} overtime
-  </div>
-  <div>
-    {{ statistic.regularAmount | currency: 'EUR' }} regular
-  </div>
+  <mat-card>
+    <mat-card-header>
+      <h3>Total clocked in time</h3>
+    </mat-card-header>
+
+    <mat-card-content class="content">
+      <mat-icon fontIcon="schedule"></mat-icon>
+      {{ statistic.totalClockedIn | timeFormat }}
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <h3>Total employees</h3>
+    </mat-card-header>
+
+    <mat-card-content class="content">
+      <mat-icon fontIcon="people"></mat-icon>
+      {{ statistic.totalEmployees }}
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <h3>Overtime</h3>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="statistic-container">
+        <div class="content">
+          <mat-icon fontIcon="money_off"></mat-icon>
+          {{ statistic.overtimeAmount | currency: 'EUR' }}
+        </div>
+
+        <app-dashboard-progress-circle [percentage]="percentageForTotalOvertimeAmount">
+        </app-dashboard-progress-circle>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <h3>Regular</h3>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="statistic-container">
+        <div class="content">
+          <mat-icon fontIcon="attach_money"></mat-icon>
+          {{ statistic.regularAmount | currency: 'EUR' }}
+        </div>
+
+        <app-dashboard-progress-circle [percentage]="percentageForTotalRegularAmount">
+        </app-dashboard-progress-circle>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

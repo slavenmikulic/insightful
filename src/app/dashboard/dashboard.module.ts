@@ -26,9 +26,17 @@ import { MatButton } from '@angular/material/button';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
 import { EmployeesEditDialogModule } from '../employees-edit-dialog/employees-edit-dialog.module';
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { DashboardProgressCircleComponent } from './components/dashboard-progress-circle/dashboard-progress-circle.component';
+import { MatIcon } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [DashboardComponent, DashboardStatisticComponent, DashboardEmployeesTableComponent],
+  declarations: [
+    DashboardComponent,
+    DashboardStatisticComponent,
+    DashboardEmployeesTableComponent,
+    DashboardProgressCircleComponent
+  ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
@@ -49,7 +57,12 @@ import { EmployeesEditDialogModule } from '../employees-edit-dialog/employees-ed
     MatButton,
     CdkVirtualScrollViewport,
     TableVirtualScrollModule,
-    EmployeesEditDialogModule
+    EmployeesEditDialogModule,
+    MatCard,
+    MatCardContent,
+    MatCardHeader,
+    MatCardTitle,
+    MatIcon
   ],
   providers: [DashboardStore]
 })

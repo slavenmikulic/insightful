@@ -23,16 +23,19 @@ export class EmployeesEditDialogComponent {
   public onSave(): void {
     const employeesForSave: unknown[] = [];
     const shiftsForSave: unknown[] = [];
-    this.employeesFormArray.controls.forEach(employeeForm => {
-      if (employeeForm.dirty) {
-        employeesForSave.push({
-          id: employeeForm.get('id')?.value,
-          name: employeeForm.get('name')?.value,
-          email: employeeForm.get('email')?.value,
-          hourlyRate: employeeForm.get('hourlyRate')?.value,
-          hourlyRateOvertime: employeeForm.get('hourlyRateOvertime')?.value
-        });
+
+    for (const employeeForm of this.employeesFormArray.controls) {
+      if (!employeeForm.dirty) {
+        continue;
       }
+
+      employeesForSave.push({
+        id: employeeForm.get('id')?.value,
+        name: employeeForm.get('name')?.value,
+        email: employeeForm.get('email')?.value,
+        hourlyRate: employeeForm.get('hourlyRate')?.value,
+        hourlyRateOvertime: employeeForm.get('hourlyRateOvertime')?.value
+      });
 
       const shifts = employeeForm.get('shifts') as FormArray<FormGroup<IShiftForm>>;
       shifts?.controls.forEach(shift => {
@@ -45,7 +48,7 @@ export class EmployeesEditDialogComponent {
           });
         }
       });
-    });
+    }
 
     this.dialogRef.close({ employees: employeesForSave, shifts: shiftsForSave });
   }

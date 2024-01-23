@@ -1,9 +1,23 @@
+
 .container {
-  padding-top: 32px;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
   justify-content: center;
   flex-direction: column;
   align-content: center;
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.statistic-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }

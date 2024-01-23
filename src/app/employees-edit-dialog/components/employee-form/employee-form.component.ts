@@ -26,7 +26,7 @@ export class EmployeeFormComponent implements OnChanges {
   private prepareFormGroup(employee: IEmployee): void {
     this.employeeForm = this.prepareEmployeeFormArrayGroup(employee);
     const formIndex = this.form.controls.findIndex(
-      (formGroup: FormGroup<IEmployeeForm>) => this.employeeForm === formGroup
+      (formGroup: FormGroup<IEmployeeForm>) => this.employeeForm.value.id === formGroup.value.id
     );
 
     if (formIndex > -1) {
