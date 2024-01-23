@@ -1,19 +1,18 @@
 
 <div class="container">
-
   @if ((dashboardStore.status$ | async) === 'loading') {
     <div class="loading">
       <mat-spinner></mat-spinner>
     </div>
   } @else if ((dashboardStore.status$ | async) === 'error') {
-    <mat-error>Something went wrong</mat-error>
+    <mat-error>Something went wrong. Please check API endpoints</mat-error>
   } @else if ((dashboardStore.status$ | async) === 'success') {
     @if (dashboardStore.statistic$ | async; as data) {
       <app-dashboard-statistic [statistic]="data"></app-dashboard-statistic>
     }
 
     @if (dashboardStore.employees$ | async; as employees) {
-      <app-employees-table [employees]="employees" (updateEmployees)="updateEmployees($event)"></app-employees-table>
+      <app-employees-table [employees]="employees" (updateEmployees)="onUpdateEmployees($event)"></app-employees-table>
     }
   }
 

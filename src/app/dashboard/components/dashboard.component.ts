@@ -16,7 +16,7 @@ export class DashboardComponent {
     this.dashboardStore.fetch();
   }
 
-  public updateEmployees(data: { employees: IEmployee[]; shifts: IShift[] }): void {
+  public onUpdateEmployees(data: { employees: IEmployee[]; shifts: IShift[] }): void {
     if (data.employees.length) {
       this.dashboardStore.editEmployeesEffect(data.employees);
     }

@@ -22,9 +22,15 @@ export class EmployeesEditDialogComponent {
   });
 
   public onSave(): void {
-    const employeesForSave: unknown[] = [];
-    const shiftsForSave: unknown[] = [];
+    if (this.form.invalid) {
+      return;
+    }
 
+    this.dialogRef.close({ employees: this.prepareEmployeesForSave(), shifts: this.prepareShiftsForSave() });
+  }
+
+  private prepareEmployeesForSave(): unknown[] {
+    const employeesForSave: unknown[] = [];
     const changedEmployees = this.employeesFormArray.controls.filter(employeeForm => employeeForm.dirty);
     for (const employeeForm of changedEmployees) {
       employeesForSave.push({
@@ -36,6 +42,11 @@ export class EmployeesEditDialogComponent {
       });
     }
 
+    return employeesForSave;
+  }
+
+  private prepareShiftsForSave(): unknown[] {
+    const shiftsForSave: unknown[] = [];
     const changedShifts = this.shiftsFormArray.controls.filter(shiftForm => shiftForm.dirty);
     for (const shiftForm of changedShifts) {
       shiftsForSave.push({
@@ -46,7 +57,7 @@ export class EmployeesEditDialogComponent {
       });
     }
 
-    this.dialogRef.close({ employees: employeesForSave, shifts: shiftsForSave });
+    return shiftsForSave;
   }
 
   get employeesFormArray(): FormArray<FormGroup<IEmployeeForm>> {
