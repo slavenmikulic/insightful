@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import { IEmployee } from '../../../core/employee/intefaces/employee.interface';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,7 +15,6 @@ import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { EmployeesEditDialogComponent } from '../../../employees-edit-dialog/components/employees-edit-dialog/employees-edit-dialog.component';
 import { filter } from 'rxjs';
 import { IShift } from '../../../core/shift/shift.interface';
-import { DashboardStore } from '../../dashboard.store';
 
 @Component({
   selector: 'app-dashboard-employees-table',
@@ -16,7 +24,7 @@ import { DashboardStore } from '../../dashboard.store';
 })
 export class DashboardEmployeesTableComponent implements OnChanges {
   @Input({ required: true }) employees!: IEmployee[];
-  dashboardStore = inject(DashboardStore);
+  @Output() updateEmployees = new EventEmitter<{ employees: IEmployee[]; shifts: IShift[] }>();
 
   public displayedColumns = ['select', 'name', 'email', 'totalClockedIn', 'regularAmount', 'overtimeAmount'];
   public selection = new SelectionModel<IEmployee>(true, []);
@@ -38,14 +46,6 @@ export class DashboardEmployeesTableComponent implements OnChanges {
       })
       .afterClosed()
       .pipe(filter((data): data is { employees: IEmployee[]; shifts: IShift[] } => !!data))
-      .subscribe(data => {
-        if (data.employees.length) {
-          this.dashboardStore.editEmployeesEffect(data.employees);
-        }
-
-        if (data.shifts.length) {
-          this.dashboardStore.editShiftsEffect(data.shifts);
-        }
-      });
+      .subscribe(data => this.updateEmployees.emit(data));
   }
 }

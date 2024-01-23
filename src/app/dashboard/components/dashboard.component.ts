@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { DashboardStore } from '../dashboard.store';
+import { IShift } from '../../core/shift/shift.interface';
+import { IEmployee } from '../../core/employee/intefaces/employee.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,5 +14,15 @@ export class DashboardComponent {
 
   constructor() {
     this.dashboardStore.fetch();
+  }
+
+  public updateEmployees(data: { employees: IEmployee[]; shifts: IShift[] }): void {
+    if (data.employees.length) {
+      this.dashboardStore.editEmployeesEffect(data.employees);
+    }
+
+    if (data.shifts.length) {
+      this.dashboardStore.editShiftsEffect(data.shifts);
+    }
   }
 }

@@ -6,7 +6,6 @@ import { DashboardComponent } from './components/dashboard.component';
 import { DashboardStatisticComponent } from './components/dashboard-statistic/dashboard-statistic.component';
 import { DashboardStore } from './dashboard.store';
 import { TimeFormatPipe } from '../core/pipes/time-format.pipe';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatError } from '@angular/material/form-field';
 import { DashboardEmployeesTableComponent } from './components/dashboard-employees-table/dashboard-employees-table.component';
 import {
@@ -29,6 +28,8 @@ import { EmployeesEditDialogModule } from '../employees-edit-dialog/employees-ed
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { DashboardProgressCircleComponent } from './components/dashboard-progress-circle/dashboard-progress-circle.component';
 import { MatIcon } from '@angular/material/icon';
+import { ProgressCircleComponent } from '../core/components/progress-circle/progress-circle.component';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,6 @@ import { MatIcon } from '@angular/material/icon';
     CommonModule,
     DashboardRoutingModule,
     TimeFormatPipe,
-    MatProgressSpinner,
     MatError,
     MatTable,
     MatCheckbox,
@@ -62,7 +62,9 @@ import { MatIcon } from '@angular/material/icon';
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
-    MatIcon
+    MatIcon,
+    ProgressCircleComponent,
+    MatProgressSpinner
   ],
   providers: [DashboardStore]
 })

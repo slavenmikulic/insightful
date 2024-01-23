@@ -35,8 +35,9 @@
           {{ statistic.overtimeAmount | currency: 'EUR' }}
         </div>
 
-        <app-dashboard-progress-circle [percentage]="percentageForTotalOvertimeAmount">
-        </app-dashboard-progress-circle>
+        <app-progress-circle
+          [percentage]="percentageForTotalOvertimeAmount">
+        </app-progress-circle>
       </div>
     </mat-card-content>
   </mat-card>
@@ -53,8 +54,9 @@
           {{ statistic.regularAmount | currency: 'EUR' }}
         </div>
 
-        <app-dashboard-progress-circle [percentage]="percentageForTotalRegularAmount">
-        </app-dashboard-progress-circle>
+        <app-progress-circle
+          [percentage]="percentageForTotalRegularAmount">
+        </app-progress-circle>
       </div>
     </mat-card-content>
   </mat-card>
