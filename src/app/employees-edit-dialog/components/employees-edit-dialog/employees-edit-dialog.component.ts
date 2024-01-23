@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IEmployee } from '../../../core/employee/intefaces/employee.interface';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IShift } from '../../../core/shift/shift.interface';
+import { FormArray, FormGroup } from '@angular/forms';
 import { IEmployeeForm } from '../../interfaces/employee-form.interface';
 import { IShiftForm } from '../../interfaces/shift-form.interface';
 import { IEmployeeEditForm } from '../../interfaces/employee-edit-form.interface';
@@ -18,7 +17,7 @@ export class EmployeesEditDialogComponent {
   dialogRef = inject(MatDialogRef);
 
   form = new FormGroup<IEmployeeEditForm>({
-    employees: this.prepareEmployeeFormArray()
+    employees: new FormArray<FormGroup<IEmployeeForm>>([])
   });
 
   public onSave(): void {
@@ -26,50 +25,29 @@ export class EmployeesEditDialogComponent {
     const shiftsForSave: unknown[] = [];
     this.employeesFormArray.controls.forEach(employeeForm => {
       if (employeeForm.dirty) {
-        employeesForSave.push(employeeForm.value);
+        employeesForSave.push({
+          id: employeeForm.get('id')?.value,
+          name: employeeForm.get('name')?.value,
+          email: employeeForm.get('email')?.value,
+          hourlyRate: employeeForm.get('hourlyRate')?.value,
+          hourlyRateOvertime: employeeForm.get('hourlyRateOvertime')?.value
+        });
       }
 
-      // if (employeeForm.get('shifts')?.dirty) {
       const shifts = employeeForm.get('shifts') as FormArray<FormGroup<IShiftForm>>;
       shifts?.controls.forEach(shift => {
         if (shift.dirty) {
-          shiftsForSave.push(shift);
+          shiftsForSave.push({
+            id: shift.get('id')?.value,
+            clockIn: shift.get('clockIn')?.value?.getTime(),
+            clockOut: shift.get('clockOut')?.value?.getTime(),
+            employeeId: shift.get('employeeId')?.value
+          });
         }
       });
-      // }
     });
-    console.log(employeesForSave);
-    console.log(shiftsForSave);
-    // this.dialogRef.close(this.form.value.employees);
-  }
 
-  private prepareEmployeeFormArray(): FormArray<FormGroup<IEmployeeForm>> {
-    return new FormArray<FormGroup<IEmployeeForm>>(
-      this.employees.map(employee => {
-        return new FormGroup<IEmployeeForm>({
-          id: new FormControl(employee.id, Validators.required),
-          name: new FormControl(employee.name, Validators.required),
-          hourlyRate: new FormControl(employee.hourlyRate, Validators.required),
-          hourlyRateOvertime: new FormControl(employee.hourlyRateOvertime, Validators.required),
-          shifts: this.prepareEmployeeShiftsFormArray(employee.shifts)
-        });
-      })
-    );
-  }
-
-  private prepareEmployeeShiftsFormArray(shifts: IShift[]): FormArray<FormGroup<IShiftForm>> {
-    const formArray = new FormArray<FormGroup<IShiftForm>>([]);
-    for (const shiftData of shifts) {
-      formArray.push(
-        new FormGroup({
-          id: new FormControl(shiftData.id, Validators.required),
-          clockIn: new FormControl(shiftData.clockIn, Validators.required),
-          clockOut: new FormControl(shiftData.clockOut, Validators.required)
-        })
-      );
-    }
-
-    return formArray;
+    this.dialogRef.close({ employees: employeesForSave, shifts: shiftsForSave });
   }
 
   get employeesFormArray(): FormArray<FormGroup<IEmployeeForm>> {

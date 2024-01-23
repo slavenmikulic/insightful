@@ -1,7 +1,9 @@
 <div class="actions">
   Selected: {{ selection.selected.length }} / {{ employees.length }}
 
-  <button mat-raised-button color="primary" [disabled]="selection.isEmpty()" (click)="onOpenDialog()">Edit Selected</button>
+  <button mat-raised-button color="primary" [disabled]="selection.isEmpty()" (click)="onOpenDialog()">
+    Bulk Edit
+  </button>
 </div>
 
 <cdk-virtual-scroll-viewport tvsItemSize="52" headerHeight="52" class="table mat-elevation-z8">

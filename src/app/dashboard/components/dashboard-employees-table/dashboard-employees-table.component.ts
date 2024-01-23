@@ -5,8 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { EmployeesEditDialogComponent } from '../../../employees-edit-dialog/components/employees-edit-dialog/employees-edit-dialog.component';
 import { filter } from 'rxjs';
-import { IEmployeeEditForm } from '../../../employees-edit-dialog/interfaces/employee-edit-form.interface';
-import { FormArray, FormGroup } from '@angular/forms';
+import { IShift } from '../../../core/shift/shift.interface';
+import { DashboardStore } from '../../dashboard.store';
 
 @Component({
   selector: 'app-dashboard-employees-table',
@@ -16,6 +16,7 @@ import { FormArray, FormGroup } from '@angular/forms';
 })
 export class DashboardEmployeesTableComponent implements OnChanges {
   @Input({ required: true }) employees!: IEmployee[];
+  dashboardStore = inject(DashboardStore);
 
   public displayedColumns = ['select', 'name', 'email', 'totalClockedIn', 'regularAmount', 'overtimeAmount'];
   public selection = new SelectionModel<IEmployee>(true, []);
@@ -36,7 +37,15 @@ export class DashboardEmployeesTableComponent implements OnChanges {
         data: this.selection.selected
       })
       .afterClosed()
-      .pipe(filter((data): data is FormGroup<IEmployeeEditForm> => !!data))
-      .subscribe(data => {});
+      .pipe(filter((data): data is { employees: IEmployee[]; shifts: IShift[] } => !!data))
+      .subscribe(data => {
+        if (data.employees.length) {
+          this.dashboardStore.editEmployeesEffect(data.employees);
+        }
+
+        if (data.shifts.length) {
+          this.dashboardStore.editShiftsEffect(data.shifts);
+        }
+      });
   }
 }

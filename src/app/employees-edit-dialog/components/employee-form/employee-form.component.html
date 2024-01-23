@@ -1,4 +1,4 @@
-<div class="employee-form" [formGroup]="form">
+<div class="employee-form" [formGroup]="employeeForm">
   <div class="employee-basic-info">
     <mat-form-field>
       <mat-label>Employee name:</mat-label>
@@ -14,3 +14,11 @@
     </mat-form-field>
   </div>
 </div>
+
+
+<h4>Shifts</h4>
+
+<app-shifts-form
+  [form]="employeeForm.controls.shifts"
+  [shiftDays]="employee.workDays">
+</app-shifts-form>

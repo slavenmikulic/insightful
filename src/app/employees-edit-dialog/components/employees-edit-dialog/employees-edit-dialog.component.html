@@ -4,19 +4,10 @@
   <div mat-dialog-content>
     <form [formGroup]="form">
       <div formArrayName="employees">
-        @for (employee of employeesFormArray.controls; track $index) {
+        @for (employee of employees; track $index) {
           <h4>Employee {{ $index + 1}}</h4>
-          <div>
 
-            <app-employee-form [form]="employee"></app-employee-form>
-
-            <h4>Shifts</h4>
-
-            <app-shifts-form
-              [form]="employee.controls.shifts"
-              [shiftDays]="employees[$index].workDays">
-            </app-shifts-form>
-          </div>
+          <app-employee-form [form]="employeesFormArray" [employee]="employee"></app-employee-form>
 
           @if (!$last) {
             <hr>

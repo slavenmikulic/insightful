@@ -69,28 +69,70 @@ export class DashboardStore extends ComponentStore<DashboardState> {
     ...state,
     employees: state.employees.map(employee => {
       const editedEmployee = employees.find(editedEmployee => editedEmployee.id === employee.id);
-      if (editedEmployee) {
-        return editedEmployee;
+
+      // if user changed hourly rate or overtime rate, we need to recalculate employee shifts statistic
+      if (
+        editedEmployee?.hourlyRate !== employee.hourlyRate ||
+        editedEmployee?.hourlyRateOvertime !== employee.hourlyRateOvertime
+      ) {
+        return {
+          ...employee,
+          ...editedEmployee,
+          ...calculateEmployeeShiftsStatistic(
+            employee.shifts,
+            editedEmployee?.hourlyRate ?? employee.hourlyRate,
+            editedEmployee?.hourlyRateOvertime ?? employee.hourlyRateOvertime
+          )
+        };
       }
+
+      if (editedEmployee) {
+        return { ...employee, ...editedEmployee };
+      }
+
       return employee;
     })
   }));
 
-  readonly editShifts = this.updater((state, shifts: IShift[]) => ({
-    ...state,
-    employees: state.employees.map(employee => {
+  readonly editShifts = this.updater((state, shifts: IShift[]) => {
+    // find only changed employees
+    const changedShiftsForEmployees = state.employees.filter(employee =>
+      shifts.some(shift => shift.employeeId === employee.id)
+    );
+
+    // update shifts for changed employees
+    changedShiftsForEmployees.map(employee => {
       const employeeShifts = employee.shifts;
-      employee.shifts = employeeShifts.map(shift => {
-        const editedShift = shifts.find(shift => shift.id === employee.id);
-        if (editedShift) {
-          return editedShift;
+      for (const shift of shifts) {
+        const index = employeeShifts.findIndex(employeeShift => employeeShift.id === shift.id);
+        if (index > -1) {
+          employeeShifts[index] = shift;
         }
-        return shift;
-      });
+      }
 
       return employee;
-    })
-  }));
+    });
+
+    return {
+      ...state,
+      employees: state.employees.map(employee => {
+        const editedEmployee = changedShiftsForEmployees.find(editedEmployee => editedEmployee.id === employee.id);
+        if (editedEmployee) {
+          // if user changed shifts, we need to recalculate employee shifts statistic
+          return {
+            ...editedEmployee,
+            ...calculateEmployeeShiftsStatistic(
+              employee.shifts,
+              editedEmployee.hourlyRate,
+              editedEmployee.hourlyRateOvertime
+            )
+          };
+        }
+
+        return employee;
+      })
+    };
+  });
 
   // effects
   readonly fetch = this.effect((source$: Observable<void>) =>
@@ -110,11 +152,15 @@ export class DashboardStore extends ComponentStore<DashboardState> {
   readonly editEmployeesEffect = this.effect<IEmployee[]>((source$: Observable<IEmployee[]>) =>
     source$.pipe(
       switchMap(employees =>
-        combineLatest(employees.map(employee => this.employeeService.update(employee.id, employee)))
+        combineLatest(
+          employees.map(employee =>
+            this.employeeService.update(employee.id, employee).pipe(map(response => ({ ...employee, ...response })))
+          )
+        )
       ),
       tapResponse(
         employees => this.editEmployees(employees),
-        () => console.error('something went wrong during the update of employees')
+        error => console.error('something went wrong during the update of employees', error)
       )
     )
   );
@@ -123,8 +169,8 @@ export class DashboardStore extends ComponentStore<DashboardState> {
     source$.pipe(
       switchMap(shifts => combineLatest(shifts.map(shift => this.shiftService.update(shift.id, shift)))),
       tapResponse(
-        shift => this.editShifts(shift),
-        () => console.error('something went wrong during the update of shifts')
+        shifts => this.editShifts(shifts),
+        error => console.error('something went wrong during the update of shifts', error)
       )
     )
   );

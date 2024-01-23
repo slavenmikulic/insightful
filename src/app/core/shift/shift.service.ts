@@ -24,4 +24,10 @@ export class ShiftService extends BaseService<IShift> {
         )
       );
   }
+
+  override update(id: string, data: IShift): Observable<IShift> {
+    return super
+      .update(id, data)
+      .pipe(map(shift => ({ ...shift, clockIn: new Date(shift.clockIn), clockOut: new Date(shift.clockOut) })));
+  }
 }
