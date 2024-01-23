@@ -23,4 +23,4 @@ Run `npm install` to install all dependencies.
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
-Run `npm run server` to run json-server. Navigate to `http://localhost:3000/`.
+Run `npm run server` to run json-server. It will be run on `http://localhost:3000/`.
