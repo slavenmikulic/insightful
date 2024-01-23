@@ -6,11 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TimeFormatPipe implements PipeTransform {
   transform(timestamp: number | null): string {
-    if (!timestamp) {
-      return '0 minutes';
-    }
-
-    if (timestamp < 0) {
+    if (!timestamp || timestamp < 0) {
       return '0 minutes';
     }
 
@@ -22,32 +18,32 @@ export class TimeFormatPipe implements PipeTransform {
     const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
     const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
 
-    const format: string[][] = [];
+    const format: string[] = [];
     if (years) {
-      format.push([`${years}`, this.formatUnitPlural(years, 'year')]);
+      format.push(`${years} ${this.formatUnitPlural(years, 'year')}`);
     }
 
     if (months) {
-      format.push([`${months}`, this.formatUnitPlural(months, 'month')]);
+      format.push(`${months} ${this.formatUnitPlural(months, 'month')}`);
     }
 
     if (days) {
-      format.push([`${days}`, this.formatUnitPlural(months, 'day')]);
+      format.push(`${days} ${this.formatUnitPlural(months, 'day')}`);
     }
 
     if (hours) {
-      format.push([`${hours}`, this.formatUnitPlural(hours, 'hour')]);
+      format.push(`${hours} ${this.formatUnitPlural(hours, 'hour')}`);
     }
 
     if (minutes) {
-      format.push([`${minutes}`, this.formatUnitPlural(minutes, 'minute')]);
+      format.push(`${minutes} ${this.formatUnitPlural(minutes, 'minute')}`);
     }
 
     if (!format.length) {
       return '0 minutes';
     }
 
-    return format.map(([value, unit]) => `${value} ${unit}`).join(', ');
+    return format.join(', ');
   }
 
   private formatUnitPlural(value: number, unit: string): string {
