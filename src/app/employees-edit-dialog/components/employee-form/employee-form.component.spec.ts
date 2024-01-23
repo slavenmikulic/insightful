@@ -9,9 +9,8 @@ describe('EmployeeFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [EmployeeFormComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(EmployeeFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

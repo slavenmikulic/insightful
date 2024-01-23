@@ -44,10 +44,16 @@ export class ShiftFilterComponent implements OnChanges {
 
     const filterDate = new Date(filter);
     const clockIn = data.value.clockIn?.getTime();
+    const clockOut = data.value.clockOut?.getTime();
+
+    let isValid = false;
     if (clockIn) {
-      return clockIn > filterDate.getTime() && clockIn < getEndDayDate(filterDate).getTime();
+      isValid = clockIn > filterDate.getTime() && clockIn < getEndDayDate(filterDate).getTime();
+    }
+    if (clockOut) {
+      isValid = isValid || (clockOut > filterDate.getTime() && clockOut < getEndDayDate(filterDate).getTime());
     }
 
-    return false;
+    return isValid;
   }
 }

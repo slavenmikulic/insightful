@@ -31,7 +31,14 @@ import { ShiftFilterComponent } from './components/shift-filter/shift-filter.com
 import { ShiftTotalTimeComponent } from './components/shift-total-time/shift-total-time.component';
 
 @NgModule({
-  declarations: [EmployeeFormComponent, ShiftsFormComponent, EmployeesEditDialogComponent, ShiftHourInputComponent, ShiftFilterComponent, ShiftTotalTimeComponent],
+  declarations: [
+    EmployeeFormComponent,
+    ShiftsFormComponent,
+    EmployeesEditDialogComponent,
+    ShiftHourInputComponent,
+    ShiftFilterComponent,
+    ShiftTotalTimeComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,

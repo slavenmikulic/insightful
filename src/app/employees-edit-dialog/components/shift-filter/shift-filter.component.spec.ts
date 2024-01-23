@@ -9,9 +9,8 @@ describe('ShiftFilterComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ShiftFilterComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ShiftFilterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

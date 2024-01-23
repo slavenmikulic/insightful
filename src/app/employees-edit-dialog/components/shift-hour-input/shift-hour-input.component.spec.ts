@@ -9,9 +9,8 @@ describe('ShiftHourInputComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ShiftHourInputComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ShiftHourInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

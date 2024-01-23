@@ -29,6 +29,7 @@ export class DashboardStore extends ComponentStore<DashboardState> {
   readonly status$ = this.select(state => state.status);
   readonly employeesCount$ = this.select(this.employees$, employees => employees.length);
 
+  // calculate for all employees statistic
   readonly employeeStatistic$: Observable<IDashboardEmployeeStatistic> = this.select(
     this.employees$,
     (employees: IEmployee[]) =>

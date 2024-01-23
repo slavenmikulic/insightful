@@ -3,17 +3,15 @@
 
   <div mat-dialog-content>
     <form [formGroup]="form">
-      <div formArrayName="employees">
-        @for (employee of employees; track $index) {
-          <h4>Employee {{ $index + 1}}</h4>
+      @for (employee of employees; track $index) {
+        <h4>Employee {{ $index + 1}}</h4>
 
-          <app-employee-form [form]="employeesFormArray" [employee]="employee"></app-employee-form>
+        <app-employee-form [form]="form" [employee]="employee"></app-employee-form>
 
-          @if (!$last) {
-            <hr>
-          }
+        @if (!$last) {
+          <hr>
         }
-      </div>
+      }
     </form>
   </div>
 

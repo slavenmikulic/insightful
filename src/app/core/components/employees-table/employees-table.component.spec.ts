@@ -9,9 +9,8 @@ describe('EmployeesTableComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [EmployeesTableComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(EmployeesTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -9,9 +9,8 @@ describe('DashboardStatisticComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DashboardStatisticComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DashboardStatisticComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

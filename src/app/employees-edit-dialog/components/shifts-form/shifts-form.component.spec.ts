@@ -9,9 +9,8 @@ describe('ShiftsFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ShiftsFormComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ShiftsFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

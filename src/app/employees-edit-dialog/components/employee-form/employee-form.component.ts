@@ -4,6 +4,7 @@ import { IEmployeeForm } from '../../interfaces/employee-form.interface';
 import { IEmployee } from '../../../core/employee/intefaces/employee.interface';
 import { IShiftForm } from '../../interfaces/shift-form.interface';
 import { IShift } from '../../../core/shift/shift.interface';
+import { IEmployeeEditForm } from '../../interfaces/employee-edit-form.interface';
 
 @Component({
   selector: 'app-employee-form',
@@ -12,27 +13,28 @@ import { IShift } from '../../../core/shift/shift.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EmployeeFormComponent implements OnChanges {
-  @Input({ required: true }) form!: FormArray<FormGroup<IEmployeeForm>>;
+  @Input({ required: true }) form!: FormGroup<IEmployeeEditForm>;
   @Input({ required: true }) employee!: IEmployee;
 
   public employeeForm!: FormGroup<IEmployeeForm>;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['employee']) {
-      this.prepareFormGroup(this.employee);
+      this.prepareEmployeeFormGroup(this.employee);
+      this.prepareShiftsFormArray(this.employee.shifts);
     }
   }
 
-  private prepareFormGroup(employee: IEmployee): void {
+  private prepareEmployeeFormGroup(employee: IEmployee): void {
     this.employeeForm = this.prepareEmployeeFormArrayGroup(employee);
-    const formIndex = this.form.controls.findIndex(
+    const formIndex = this.employeesFormArray.controls.findIndex(
       (formGroup: FormGroup<IEmployeeForm>) => this.employeeForm.value.id === formGroup.value.id
     );
 
     if (formIndex > -1) {
-      this.form.at(formIndex).patchValue(this.employeeForm.value);
+      this.employeesFormArray.at(formIndex).patchValue(this.employeeForm.value);
     } else {
-      this.form.push(this.employeeForm);
+      this.employeesFormArray.push(this.employeeForm);
     }
   }
 
@@ -42,8 +44,7 @@ export class EmployeeFormComponent implements OnChanges {
       name: new FormControl(employee.name, Validators.required),
       email: new FormControl(employee.email, Validators.required),
       hourlyRate: new FormControl(employee.hourlyRate, Validators.required),
-      hourlyRateOvertime: new FormControl(employee.hourlyRateOvertime, Validators.required),
-      shifts: this.prepareShiftsFormArray(employee.shifts)
+      hourlyRateOvertime: new FormControl(employee.hourlyRateOvertime, Validators.required)
     });
   }
 
@@ -51,16 +52,31 @@ export class EmployeeFormComponent implements OnChanges {
     const formArray = new FormArray<FormGroup<IShiftForm>>([]);
 
     for (const shiftData of shifts) {
-      formArray.push(
-        new FormGroup<IShiftForm>({
-          id: new FormControl(shiftData.id, Validators.required),
-          clockIn: new FormControl(shiftData.clockIn, Validators.required),
-          clockOut: new FormControl(shiftData.clockOut, Validators.required),
-          employeeId: new FormControl(shiftData.employeeId, Validators.required)
-        })
-      );
+      const index = this.shiftsFormArray.controls.findIndex(formGroup => formGroup.value.id === shiftData.id);
+      if (index > -1) {
+        this.shiftsFormArray.at(index).patchValue(shiftData);
+      } else {
+        this.shiftsFormArray.push(this.createShiftFormGroup(shiftData));
+      }
     }
 
     return formArray;
+  }
+
+  private createShiftFormGroup(shift: IShift): FormGroup<IShiftForm> {
+    return new FormGroup<IShiftForm>({
+      id: new FormControl(shift.id, Validators.required),
+      clockIn: new FormControl(shift.clockIn, Validators.required),
+      clockOut: new FormControl(shift.clockOut, Validators.required),
+      employeeId: new FormControl(shift.employeeId, Validators.required)
+    });
+  }
+
+  get shiftsFormArray(): FormArray<FormGroup<IShiftForm>> {
+    return this.form.get('shifts') as FormArray<FormGroup<IShiftForm>>;
+  }
+
+  get employeesFormArray(): FormArray<FormGroup<IEmployeeForm>> {
+    return this.form.get('employees') as FormArray<FormGroup<IEmployeeForm>>;
   }
 }

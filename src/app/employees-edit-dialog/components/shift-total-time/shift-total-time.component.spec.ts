@@ -9,9 +9,8 @@ describe('ShiftTotalTimeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ShiftTotalTimeComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ShiftTotalTimeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -9,9 +9,8 @@ describe('ProgressCircleComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ProgressCircleComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ProgressCircleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

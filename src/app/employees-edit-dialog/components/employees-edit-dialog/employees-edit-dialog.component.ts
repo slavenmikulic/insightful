@@ -17,18 +17,16 @@ export class EmployeesEditDialogComponent {
   dialogRef = inject(MatDialogRef);
 
   form = new FormGroup<IEmployeeEditForm>({
-    employees: new FormArray<FormGroup<IEmployeeForm>>([])
+    employees: new FormArray<FormGroup<IEmployeeForm>>([]),
+    shifts: new FormArray<FormGroup<IShiftForm>>([])
   });
 
   public onSave(): void {
     const employeesForSave: unknown[] = [];
     const shiftsForSave: unknown[] = [];
 
-    for (const employeeForm of this.employeesFormArray.controls) {
-      if (!employeeForm.dirty) {
-        continue;
-      }
-
+    const changedEmployees = this.employeesFormArray.controls.filter(employeeForm => employeeForm.dirty);
+    for (const employeeForm of changedEmployees) {
       employeesForSave.push({
         id: employeeForm.get('id')?.value,
         name: employeeForm.get('name')?.value,
@@ -36,17 +34,15 @@ export class EmployeesEditDialogComponent {
         hourlyRate: employeeForm.get('hourlyRate')?.value,
         hourlyRateOvertime: employeeForm.get('hourlyRateOvertime')?.value
       });
+    }
 
-      const shifts = employeeForm.get('shifts') as FormArray<FormGroup<IShiftForm>>;
-      shifts?.controls.forEach(shift => {
-        if (shift.dirty) {
-          shiftsForSave.push({
-            id: shift.get('id')?.value,
-            clockIn: shift.get('clockIn')?.value?.getTime(),
-            clockOut: shift.get('clockOut')?.value?.getTime(),
-            employeeId: shift.get('employeeId')?.value
-          });
-        }
+    const changedShifts = this.shiftsFormArray.controls.filter(shiftForm => shiftForm.dirty);
+    for (const shiftForm of changedShifts) {
+      shiftsForSave.push({
+        id: shiftForm.get('id')?.value,
+        clockIn: shiftForm.get('clockIn')?.value?.getTime(),
+        clockOut: shiftForm.get('clockOut')?.value?.getTime(),
+        employeeId: shiftForm.get('employeeId')?.value
       });
     }
 
@@ -55,5 +51,9 @@ export class EmployeesEditDialogComponent {
 
   get employeesFormArray(): FormArray<FormGroup<IEmployeeForm>> {
     return this.form.get('employees') as FormArray<FormGroup<IEmployeeForm>>;
+  }
+
+  get shiftsFormArray(): FormArray<FormGroup<IShiftForm>> {
+    return this.form.get('shifts') as FormArray<FormGroup<IShiftForm>>;
   }
 }

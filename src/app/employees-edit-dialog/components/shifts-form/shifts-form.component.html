@@ -6,10 +6,10 @@
       (filterDateChange)="onChangeFilter($event)">
     </app-shift-filter>
   </div>
-  <cdk-virtual-scroll-viewport tvsItemSize="52" class="wrapper">
+  <cdk-virtual-scroll-viewport tvsItemSize class="wrapper">
     <table mat-table [dataSource]="dataSource" class="table mat-elevation-z0">
       <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayColumns;" style="max-height: 52px"></tr>
 
       <ng-container matColumnDef="shift">
         <th mat-header-cell *matHeaderCellDef>Shift</th>

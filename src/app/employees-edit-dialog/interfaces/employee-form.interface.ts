@@ -1,5 +1,4 @@
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { IShiftForm } from './shift-form.interface';
+import { FormControl } from '@angular/forms';
 
 export interface IEmployeeForm {
   id: FormControl<string | null>;
@@ -7,5 +6,4 @@ export interface IEmployeeForm {
   email: FormControl<string | null>;
   hourlyRate: FormControl<number | null>;
   hourlyRateOvertime: FormControl<number | null>;
-  shifts: FormArray<FormGroup<IShiftForm>>;
 }
