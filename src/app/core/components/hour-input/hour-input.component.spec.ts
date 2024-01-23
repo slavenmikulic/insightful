@@ -9,9 +9,8 @@ describe('HourInputComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HourInputComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(HourInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

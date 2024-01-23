@@ -8,9 +8,6 @@ export const getEndDayDateTimestamp = (date: Date): number => getEndDayDate(date
 
 export const getStartDayDateTimestamp = (date: Date): number => getStartDayDate(date).getTime();
 
-export const calculateClockOutForNextDay = (clockOut: Date): number =>
-  clockOut.getTime() - getStartDayDateTimestamp(clockOut);
-
 export const calculateClockInUntilEndOfDay = (clockIn: Date): number =>
   getEndDayDate(clockIn).getTime() - clockIn.getTime();
 

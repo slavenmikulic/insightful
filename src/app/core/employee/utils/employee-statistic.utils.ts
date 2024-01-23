@@ -42,6 +42,7 @@ export const calculateEmployeeShiftsStatistic = (
       current.total = 0;
     }
 
+    // if the shift is on the same day as the current day, add the shift's total to the current day's total
     const isSameDay = shift.clockIn.getDate() === shift.clockOut.getDate();
     if (isSameDay) {
       current.total += shift.clockOut.getTime() - shift.clockIn.getTime();
@@ -53,6 +54,8 @@ export const calculateEmployeeShiftsStatistic = (
 
       // this is for next day
       current.day = getStartDayDate(shift.clockOut);
+
+      // calculate from the start of the day until clock out
       current.total = shift.clockOut.getTime() - current.day.getTime();
     }
   }
